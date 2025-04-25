@@ -17,7 +17,7 @@ class Driver extends Model
      * @var array
      */
     protected $fillable = [
-        'personId',
+        'person_id',
         'created_by_user_id',
         'createdDate',
     ];
@@ -31,7 +31,7 @@ class Driver extends Model
     {
         return [
             'id' => 'integer',
-            'personId' => 'integer',
+            'person_id' => 'integer',
             'created_by_user_id' => 'integer',
             'createdDate' => 'timestamp',
         ];

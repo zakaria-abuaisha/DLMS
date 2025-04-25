@@ -13,13 +13,21 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('applicant_person_id');
+            $table->foreignId('applicant_person_id')
+            ->references('id')
+            ->on('people')
+            ->onDelete('cascade');
             $table->dateTime('applicationDate');
-            $table->foreignId('application_type_id');
-            $table->enum('applicationStatus', ["P","C","F"]);
+            $table->foreignId('application_type_id')
+            ->references('id')
+            ->on('application_types');
+            $table->enum('applicationStatus', ["P","C","F"])->default('P'); # Pending, Canceled, Finished
             $table->dateTime('lastStatusDate');
             $table->decimal('paidFees', 10, 2);
-            $table->foreignId('created_by_user_id');
+            $table->foreignId('created_by_user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

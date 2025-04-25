@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('test_types', function (Blueprint $table) {
+        Schema::create('license_classes', function (Blueprint $table) {
             $table->id();
-            $table->string('testTypeTitle');
-            $table->text('testTypeDescription');
-            $table->decimal('textTypeFees', 10, 2);
+            $table->string('className')->unique();
+            $table->text('classDescription');
+            $table->unsignedSmallInteger('minimumAllowedAge');
+            $table->unsignedSmallInteger('defaultValidityLength');
+            $table->decimal('classFees', 10, 2);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('test_types');
+        Schema::dropIfExists('license_classes');
     }
 };

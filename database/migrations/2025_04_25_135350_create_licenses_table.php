@@ -13,15 +13,19 @@ return new class extends Migration
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('application_id');
-            $table->foreignId('driver_id');
-            $table->foreignId('license_class_id');
-            $table->timestamp('issueDate');
+            $table->foreignId('application_id')
+                ->references('id')->on('applications');
+            $table->foreignId('driver_id')
+                ->references('id')->on('drivers');
+            $table->foreignId('license_class_id')
+                ->references('id')->on('license_classes');
+            $table->timestamp('issueDate')->useCurrent();
             $table->dateTime('expirationDate');
             $table->text('notes');
             $table->decimal('paidFees', 10, 2);
-            $table->boolean('isActive');
-            $table->foreignId('created_by_user_id');
+            $table->boolean('isActive')->default(true);
+            $table->foreignId('created_by_user_id')
+                ->references('id')->on('users');
             $table->timestamps();
         });
     }

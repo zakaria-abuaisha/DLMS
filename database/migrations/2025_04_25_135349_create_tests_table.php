@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_appointment_id');
+            $table->foreignId('test_appointment_id')
+                ->references('id')
+                ->on('test_appointments');
             $table->boolean('testResult');
             $table->text('notes');
-            $table->foreignId('created_by_user_id');
+            $table->foreignId('created_by_user_id')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
         });
     }

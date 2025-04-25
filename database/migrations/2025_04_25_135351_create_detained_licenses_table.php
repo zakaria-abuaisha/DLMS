@@ -13,15 +13,20 @@ return new class extends Migration
     {
         Schema::create('detained_licenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('license_id');
-            $table->timestamp('detainDate');
+            $table->foreignId('license_id')
+                ->references('id')->on('licenses');
+            $table->timestamp('detainDate')->useCurrent();
             $table->decimal('fineFees', 10, 2);
-            $table->foreignId('created_by_user_id');
-            $table->foreignId('license_class_id');
-            $table->boolean('isReleased');
-            $table->dateTime('releaseDate');
-            $table->foreignId('released_by_user_id')->nullable();
-            $table->foreignId('release_application_id');
+            $table->foreignId('created_by_user_id')
+                ->references('id')->on('users');
+            $table->foreignId('license_class_id')
+                ->references('id')->on('license_classes');
+            $table->boolean('isReleased')->default(false);
+            $table->dateTime('releaseDate')->nullable();
+            $table->foreignId('released_by_user_id')
+                ->references('id')->on('users')->nullable();
+            $table->foreignId('release_application_id')
+                ->references('id')->on('applications')->nullable();
             $table->timestamps();
         });
     }

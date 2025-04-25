@@ -13,8 +13,16 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('personId');
-            $table->foreignId('created_by_user_id');
+            $table->foreignId('person_id')
+            ->references('id')
+            ->on('people')
+            ->onDelete('cascade');
+
+            $table->foreignId('created_by_user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
+
             $table->timestamp('createdDate');
             $table->timestamps();
         });

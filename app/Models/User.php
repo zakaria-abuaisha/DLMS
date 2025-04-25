@@ -17,7 +17,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'personId',
+        'person_id',
         'userName',
         'password',
         'isActive',
@@ -41,7 +41,7 @@ class User extends Model
     {
         return [
             'id' => 'integer',
-            'personId' => 'integer',
+            'person_id' => 'integer',
             'isActive' => 'boolean',
         ];
     }

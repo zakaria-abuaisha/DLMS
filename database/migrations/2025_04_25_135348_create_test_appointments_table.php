@@ -13,12 +13,20 @@ return new class extends Migration
     {
         Schema::create('test_appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_type_id');
-            $table->foreignId('Local_dl_application_id');
+            $table->foreignId('test_type_id')
+                ->references('id')
+                ->on('test_types')
+                ->onDelete('cascade');
+            $table->foreignId('Local_dl_application_id')
+                ->references('id')
+                ->on('local_driving_license_applications')
+                ->onDelete('cascade');
             $table->dateTime('appointmentDate');
             $table->decimal('paidFees', 10, 2);
-            $table->foreignId('created_by_user_id');
-            $table->boolean('isLocked');
+            $table->foreignId('created_by_user_id')
+                ->references('id')
+                ->on('users');
+            $table->boolean('isLocked')->default(false);
             $table->timestamps();
         });
     }

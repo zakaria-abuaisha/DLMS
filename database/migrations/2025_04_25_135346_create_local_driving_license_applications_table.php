@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('local_driving_license_applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('application_id');
-            $table->foreignId('license_class_id');
+            $table->foreignId('application_id')
+                ->references('id')
+                ->on('applications');
+            $table->foreignId('license_class_id')
+                ->references('id')
+                ->on('license_classes')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
