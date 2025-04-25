@@ -4,17 +4,18 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Person;
-use App\Models\User;
+use App\Models\Application;
+use App\Models\LicenseClass;
+use App\Models\LocalDrivingLicenseApplication;
 
-class UserFactory extends Factory
+class LocalDrivingLicenseApplicationFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = LocalDrivingLicenseApplication::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +23,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'personId' => Person::factory(),
-            'userName' => fake()->word(),
-            'password' => fake()->password(),
-            'isActive' => fake()->boolean(),
+            'application_id' => Application::factory(),
+            'license_class_id' => LicenseClass::factory(),
         ];
     }
 }

@@ -1,0 +1,50 @@
+created:
+    - database/factories/PersonFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/DriverFactory.php
+    - database/factories/ApplicationFactory.php
+    - database/factories/ApplicationTypeFactory.php
+    - database/factories/LocalDrivingLicenseApplicationFactory.php
+    - database/factories/LicenseClassFactory.php
+    - database/factories/TestAppointmentFactory.php
+    - database/factories/TestTypeFactory.php
+    - database/factories/TestFactory.php
+    - database/factories/LicenseFactory.php
+    - database/factories/DetainedLicenseFactory.php
+    - database/migrations/2025_04_25_135340_create_people_table.php
+    - database/migrations/2025_04_25_135341_create_users_table.php
+    - database/migrations/2025_04_25_135342_create_drivers_table.php
+    - database/migrations/2025_04_25_135343_create_applications_table.php
+    - database/migrations/2025_04_25_135344_create_application_types_table.php
+    - database/migrations/2025_04_25_135345_create_local_driving_license_applications_table.php
+    - database/migrations/2025_04_25_135346_create_license_classes_table.php
+    - database/migrations/2025_04_25_135347_create_test_appointments_table.php
+    - database/migrations/2025_04_25_135348_create_test_types_table.php
+    - database/migrations/2025_04_25_135349_create_tests_table.php
+    - database/migrations/2025_04_25_135350_create_licenses_table.php
+    - database/migrations/2025_04_25_135351_create_detained_licenses_table.php
+    - app/Models/Person.php
+    - app/Models/User.php
+    - app/Models/Driver.php
+    - app/Models/Application.php
+    - app/Models/ApplicationType.php
+    - app/Models/LocalDrivingLicenseApplication.php
+    - app/Models/LicenseClass.php
+    - app/Models/TestAppointment.php
+    - app/Models/TestType.php
+    - app/Models/Test.php
+    - app/Models/License.php
+    - app/Models/DetainedLicense.php
+models:
+    User: { personId: 'id:Person', userName: string, password: string, isActive: boolean }
+    Person: { nationalityNo: string, firstName: string, lastName: string, dateOfBirth: date, sex: 'enum:m,f', address: string, phone: string, email: string, imagePath: string }
+    Driver: { personId: 'id:Person', created_by_user_id: 'id:User', createdDate: timestamp }
+    Application: { applicant_person_id: 'id:Person', applicationDate: dateTime, application_type_id: 'id:ApplicationType', applicationStatus: 'enum:P,C,F', lastStatusDate: dateTime, paidFees: 'decimal:10,2', created_by_user_id: 'id:User' }
+    ApplicationType: { applicantTypeTitle: string, applicationFees: 'decimal:10,2' }
+    LocalDrivingLicenseApplication: { application_id: 'id:Application', license_class_id: 'id:LicenseClass' }
+    LicenseClass: { className: string, classDescription: text, minimumAllowedAge: unsignedSmallInteger, defaultValidityLength: unsignedSmallInteger, classFees: 'decimal:10,2' }
+    TestAppointment: { test_type_id: 'id:TestTypes', Local_dl_application_id: 'id:LocalDrivingLicenseApplication', appointmentDate: DateTime, paidFees: 'decimal:10,2', created_by_user_id: 'id:User', isLocked: boolean }
+    TestType: { testTypeTitle: string, testTypeDescription: text, textTypeFees: 'decimal:10,2' }
+    Test: { test_appointment_id: 'id:TestAppointment', testResult: boolean, notes: text, created_by_user_id: 'id:User' }
+    License: { application_id: 'id:Application', driver_id: 'id:Driver', license_class_id: 'id:LicenseClass', issueDate: timestamp, expirationDate: dateTime, notes: text, paidFees: 'decimal:10,2', isActive: boolean, created_by_user_id: 'id:User' }
+    DetainedLicense: { license_id: 'id:License', detainDate: timestamp, fineFees: 'decimal:10,2', created_by_user_id: 'id:User', license_class_id: 'id:LicenseClass', isReleased: boolean, releaseDate: dateTime, released_by_user_id: 'id:User nullable', release_application_id: 'id:Application' }

@@ -2,35 +2,34 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'personId',
+        'userName',
         'password',
+        'isActive',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -41,8 +40,49 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'id' => 'integer',
+            'personId' => 'integer',
+            'isActive' => 'boolean',
         ];
+    }
+
+    public function person(): BelongsTo
+    {
+        return $this->belongsTo(Person::class);
+    }
+
+    function drivers(): hasMany
+    {
+        return $this->hasMany(Driver::class, 'created_by_user_id');
+    }
+
+    function createdDetainedLicenses(): hasMany
+    {
+        return $this->hasMany(DetainedLicense::class, "created_by_user_id");
+    }
+
+    function createdLicenses(): hasMany
+    {
+        return $this->hasMany(License::class, "created_by_user_id");
+    }
+
+    function releasedDetainedCards(): hasMany
+    {
+        return $this->hasMany(DetainedLicense::class, "released_by_user_id");
+    }
+
+    function createdTests(): hasMany
+    {
+        return $this->hasMany(Test::class, "created_by_user_id");
+    }
+
+    function createdTestAppointments(): hasMany
+    {
+        return $this->hasMany(TestAppointment::class, "created_by_user_id");
+    }
+
+    function createdApplications(): hasMany
+    {
+        return $this->hasMany(Application::class, "created_by_user_id");
     }
 }
