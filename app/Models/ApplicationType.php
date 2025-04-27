@@ -16,7 +16,7 @@ class ApplicationType extends Model
      * @var array
      */
     protected $fillable = [
-        'applicantTypeTitle',
+        'title',
         'applicationFees',
     ];
 

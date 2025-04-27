@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('application_types', function (Blueprint $table) {
             $table->id();
-            $table->string('applicantTypeTitle');
+            $table->string('title');
             $table->decimal('applicationFees', 10, 2);
             $table->timestamps();
         });
