@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\ApplicationType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,11 +27,11 @@ class ApplicationResource extends JsonResource
                 'paidFees' => $this->paidFees,
                 'created_by_user_id' => $this->created_by_user_id,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'applicantInfo' => new PersonResource($this->whenLoaded('applicantPerson')),
+                'applicationType' => new ApplicationTypeResource($this->whenLoaded('applicationType')),
+                'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
+
             ],
             'links' => [
                 // TODO: 'self' =>

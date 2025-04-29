@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\License;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -27,11 +28,11 @@ class DetainedLicenseResource extends JsonResource
                 'released_by_user_id' => $this->released_by_user_id,
                 'release_application_id' => $this->release_application_id,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'license' => new LicenseResource($this->whenLoaded('license')),
+                'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
+                'releasedByUser' => new UserResource($this->whenLoaded('releasedByUser')),
+                'releaseApplication' => new ApplicationResource($this->whenLoaded('releaseApplication')),
             ],
             'links' => [
                 // TODO: 'self' =>

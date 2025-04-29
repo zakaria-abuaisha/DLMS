@@ -25,11 +25,11 @@ class TestAppointmentResource extends JsonResource
                 'created_by_user_id' => $this->created_by_user_id,
                 'isLocked' => $this->isLocked,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'testType' => new TestTypeResource($this->whenLoaded('testType')),
+                'localDlApplication' => new LocalDLApplicationResource($this->whenLoaded('localDlApplication')),
+                'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
+                'test' => new TestResource($this->whenLoaded('test')),
             ],
             'links' => [
                 // TODO: 'self' =>

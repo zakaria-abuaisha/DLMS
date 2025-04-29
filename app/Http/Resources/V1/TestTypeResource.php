@@ -22,11 +22,8 @@ class TestTypeResource extends JsonResource
                 'testTypeDescription' => $this->testTypeDescription,
                 'textTypeFees' => $this->textTypeFees,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'testAppointments' => TestAppointmentResource::collection($this->whenLoaded('testAppointments'))
             ],
             'links' => [
                 // TODO: 'self' =>

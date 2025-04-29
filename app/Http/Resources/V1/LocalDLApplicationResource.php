@@ -21,11 +21,9 @@ class LocalDLApplicationResource extends JsonResource
                 'application_id' => $this->application_id,
                 'license_class_id' => $this->license_class_id,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'application' => new ApplicationResource($this->whenLoaded('application')),
+                'licenseClass' => new LicenseClassResource($this->whenLoaded('licenseClass')),
             ],
             'links' => [
                 // TODO: 'self' =>

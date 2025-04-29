@@ -24,11 +24,9 @@ class LicenseClassResource extends JsonResource
                 'defaultValidityLength' => $this->defaultValidityLength,
                 'classFees' => $this->classFees
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'Licenses' => LicenseResource::collection($this->whenLoaded('Licenses')),
+                'LocalDrivingLicenseApplications' => LocalDLApplicationResource::collection($this->whenLoaded('LocalDrivingLicenseApplications')),
             ],
             'links' => [
                 // TODO: 'self' =>

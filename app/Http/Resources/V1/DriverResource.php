@@ -23,10 +23,9 @@ class DriverResource extends JsonResource
                 'createdDate' => $this->isActive,
             ],
             'included' => [
-                // TODO
-            ],
-            'relationships' => [
-                //TODO:
+                'driverInfo' => new PersonResource($this->whenLoaded('person')),
+                'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
+                'license' => new LicenseResource($this->whenLoaded('licenses')),
             ],
             'links' => [
                 // TODO:

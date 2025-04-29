@@ -21,11 +21,8 @@ class ApplicationTypeResource extends JsonResource
                 'title' => $this->title,
                 'applicationFees' => $this->applicationFees,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'applications' => ApplicationResource::collection($this->whenLoaded('applications')),
             ],
             'links' => [
                 // TODO: 'self' =>

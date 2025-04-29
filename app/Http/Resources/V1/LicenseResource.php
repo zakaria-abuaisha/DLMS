@@ -28,11 +28,11 @@ class LicenseResource extends JsonResource
                 'isActive' => $this->isActive,
                 'created_by_user_id' => $this->created_by_user_id,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'application' => new ApplicationResource($this->whenLoaded('application')),
+                'driver' => new DriverResource($this->whenLoaded('driver')),
+                'licenseClass' => new LicenseClassResource($this->whenLoaded('licenseClass')),
+                'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
             ],
             'links' => [
                 // TODO: 'self' =>

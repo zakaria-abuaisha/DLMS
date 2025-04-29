@@ -23,11 +23,9 @@ class TestResource extends JsonResource
                 'notes' => $this->notes,
                 'created_by_user_id' => $this->created_by_user_id,
             ],
-            'relationships' => [
-                // TODO:
-            ],
             'included' => [
-                // TODO:
+                'testAppointment' => new TestAppointmentResource($this->whenLoaded('testAppointment')),
+                'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
             ],
             'links' => [
                 // TODO: 'self' =>

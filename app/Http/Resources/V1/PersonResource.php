@@ -30,10 +30,8 @@ class PersonResource extends JsonResource
             ],
             'included' => [
                 'user' => new UserResource($this->whenLoaded('user')),
-                // driver
-            ],
-            'relationships' => [
-                //TODO: applications
+                'driver' => new DriverResource($this->whenLoaded('driver')),
+                'applications' => ApplicationResource::collection(($this->whenLoaded('applications'))),
             ],
             'links' => [
                 // TODO: 'self' =>
