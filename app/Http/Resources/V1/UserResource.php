@@ -27,7 +27,7 @@ class UserResource extends JsonResource
                 'userInfo' => new PersonResource($this->whenLoaded('person')),
                 'createdDrivers' => DriverResource::collection($this->whenLoaded('drivers')),
                 'detainedLicenses' => DetainedLicenseResource::collection($this->whenLoaded('createdDetainedLicenses')),
-                'createdLicense' => LicenseResource::collection($this->whenLoaded('createdLicenses')),
+                'createdLicenses' => LicenseResource::collection($this->whenLoaded('createdLicenses')),
                 'releasedDetainedLicense' => DetainedLicenseResource::collection($this->whenLoaded('releasedDetainedCards')),
                 'createdTests' => TestResource::collection($this->whenLoaded('createdTests')),
                 'createdTestAppointments' => TestAppointmentResource::collection($this->whenLoaded('createdTestAppointments')),

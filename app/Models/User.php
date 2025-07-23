@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Http\Filters\V1\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +26,7 @@ class User extends Model
         'userName',
         'password',
         'isActive',
+        'isAdmin',
     ];
 
     /**
@@ -43,6 +49,7 @@ class User extends Model
             'id' => 'integer',
             'person_id' => 'integer',
             'isActive' => 'boolean',
+            'isAdmin' => 'boolean',
         ];
     }
 
@@ -84,5 +91,9 @@ class User extends Model
     function createdApplications(): hasMany
     {
         return $this->hasMany(Application::class, "created_by_user_id");
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters) {
+        return $filters->apply($builder);
     }
 }

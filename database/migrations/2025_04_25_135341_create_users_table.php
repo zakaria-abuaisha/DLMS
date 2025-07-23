@@ -19,6 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('userName')->unique();
             $table->boolean('isActive');
+            $table->boolean('isAdmin');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
