@@ -23,7 +23,6 @@ return new class extends Migration
             ->on('users')
             ->onDelete('cascade');
 
-            $table->timestamp('createdDate');
             $table->timestamps();
         });
     }

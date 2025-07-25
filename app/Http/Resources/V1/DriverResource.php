@@ -20,7 +20,7 @@ class DriverResource extends JsonResource
             'attributes' => [
                 'person_id' => $this->person_id,
                 'created_by_user_id' => $this->created_by_user_id,
-                'createdDate' => $this->isActive,
+                'createdDate' => $this->created_at,
             ],
             'included' => [
                 'driverInfo' => new PersonResource($this->whenLoaded('person')),

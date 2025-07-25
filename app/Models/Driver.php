@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\V1\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +21,6 @@ class Driver extends Model
     protected $fillable = [
         'person_id',
         'created_by_user_id',
-        'createdDate',
     ];
 
     /**
@@ -33,7 +34,6 @@ class Driver extends Model
             'id' => 'integer',
             'person_id' => 'integer',
             'created_by_user_id' => 'integer',
-            'createdDate' => 'timestamp',
         ];
     }
 
@@ -50,5 +50,10 @@ class Driver extends Model
     public function licenses(): HasMany
     {
         return $this->hasMany(License::class);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    {
+        return $filters->apply($builder);
     }
 }

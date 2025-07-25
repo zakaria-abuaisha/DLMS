@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Api\V1\Person\StorePersonRequest;
-use App\Http\Requests\Api\V1\Person\UpdatePersonRequest;
+use App\Http\Requests\Api\V1\People\StorePersonRequest;
+use App\Http\Requests\Api\V1\People\UpdatePersonRequest;
 use App\Http\Resources\V1\PersonResource;
 use App\Models\Person;
 use App\Models\User;

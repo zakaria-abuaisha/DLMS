@@ -23,9 +23,8 @@ class DriverFactory extends Factory
     public function definition(): array
     {
         return [
-            'personId' => Person::factory(),
+            'person_id' => Person::factory(),
             'created_by_user_id' => User::factory(),
-            'createdDate' => fake()->dateTime(),
         ];
     }
 }

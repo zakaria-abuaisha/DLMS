@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Api\V1\Person\StorePersonImageRequest;
+use App\Http\Requests\Api\V1\People\StorePersonImageRequest;
 use App\Models\Person;
 use App\Models\User;
 use App\Policies\V1\UserPolicy;
