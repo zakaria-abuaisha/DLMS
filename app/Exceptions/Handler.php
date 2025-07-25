@@ -21,6 +21,7 @@ class Handler extends ExceptionHandler
         AuthenticationException::class => 'handleAuthentication',
     ];
 
+
     private function handleValidation(ValidationException $exception)
     {
         foreach ($exception->errors() as $key => $value)

@@ -18,7 +18,7 @@ return new class extends Migration
                 ->on('people')
                 ->cascadeOnDelete();
             $table->string('userName')->unique();
-            $table->boolean('isActive');
+            $table->boolean('isActive')->default(true);
             $table->boolean('isAdmin');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

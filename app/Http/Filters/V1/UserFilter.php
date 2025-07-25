@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 
 class UserFilter extends QueryFilter
 {
+
     protected $sortable = [
-        'userName',
-        'nationalityNo',
-        'firstName',
-        'lastName',
-        'dateOfBirth',
-        'isActive',
+        'userName' => 'self',
+        'nationalityNo' => 'people:person_id,id',
+        'firstName' => 'people:person_id,id',
+        'lastName' => 'people:person_id,id',
+        'dateOfBirth' => 'people:person_id,id',
+        'isActive' => 'self',
     ];
 
     public function userName($value) {
@@ -22,10 +23,10 @@ class UserFilter extends QueryFilter
 
     public function firstName($value) {
         $likeStr = str_replace('*', '%', $value);
+
         return $this->builder
             ->join('people', 'people.id', '=', 'users.person_id')
-            ->where('firstName', 'like', $likeStr)
-            ->select("users.*");
+            ->where('firstName', 'like', $likeStr);
     }
 
     public function lastName($value) {

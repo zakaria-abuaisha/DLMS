@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('email')->unique();
-            $table->string('imagePath');
+            $table->string('imagePath')->nullable()->default(null);
             $table->timestamps();
         });
     }

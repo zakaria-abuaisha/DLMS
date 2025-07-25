@@ -30,7 +30,7 @@ class UserPolicy
 
     public function update(User $user, User $model): bool
     {
-        if($user->tokenCan(Abilities::UpdateUser))
+        if($user->tokenCan(Abilities::UpdateUser) || $user->tokenCan(Abilities::UpdateOwnData))
             return true;
 
         throw new AuthenticationException('You Are Not Authorized');

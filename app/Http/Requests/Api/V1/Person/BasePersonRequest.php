@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Person;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BaseUserRequest extends FormRequest
+class BasePersonRequest extends FormRequest
 {
     public function mappedAttributes(array $otherAttributes = []): array
     {
+
         $attributeMap = array_merge(
             [
                 'data.attributes.nationalityNo' => 'nationalityNo',
@@ -18,9 +19,6 @@ class BaseUserRequest extends FormRequest
                 'data.attributes.address' => 'address',
                 'data.attributes.phone' => 'phone',
                 'data.attributes.email' => 'email',
-                'data.attributes.userName' => 'userName',
-                'data.attributes.password' => 'password',
-                'data.attributes.isAdmin' => 'isAdmin',
             ]
         , $otherAttributes);
 
@@ -28,15 +26,9 @@ class BaseUserRequest extends FormRequest
         foreach ($attributeMap as $key => $attribute) {
             if ($this->has($key)) {
                 $value = $this->input($key);
-
-                if($attribute === 'password')
-                {
-                    $value = bcrypt($value);
-                }
                 $attributesToUpdate[$attribute] = $value;
             }
         }
-
         return $attributesToUpdate;
     }
 }

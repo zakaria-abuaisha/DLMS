@@ -2,69 +2,54 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
 use App\Http\Filters\V1\UserFilter;
-use App\Http\Requests\Api\V1\StoreUserRequest;
+use App\Http\Requests\Api\V1\Users\StoreUserRequest;
+use App\Http\Requests\Api\V1\Users\UpdateUserRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use App\Policies\V1\UserPolicy;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
-use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends ApiController
 {
-
     protected $policyClass = UserPolicy::class;
 
     public function index(UserFilter $filters)
     {
-        try{
-            $this->isAble("viewAny", User::class);
 
+        if($this->isAble("viewAny", Auth::user()))
+        {
             return UserResource::collection(
-                User::with('person')::filter($filters)->paginate()
+                User::filter($filters)->paginate()
             );
         }
-        catch (AuthenticationException $e)
-        {
-            return $this->error('Not Authorized', 401);
-        }
-
+        return $this->notAuthorized("NOT Authorized");
     }
 
     public function store(StoreUserRequest $request)
     {
-        try
+        if($this->isAble("store", Auth::user()))
         {
-            $this->isAble("store", User::class);
-
             return new UserResource(User::create($request->mappedAttributes()));
         }
-        catch (AuthenticationException $e)
-        {
-            return $this->error('Not Authorized', 401);
-        }
+        return $this->notAuthorized("NOT Authorized");
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user)
     {
-        $toBeIncluded = [
-            'userInfo' => 'person',
-            'createdDrivers' => 'drivers',
-            'detainedLicenses' => 'createdDetainedLicenses',
-            'createdLicenses' => 'createdLicenses',
-            'releasedDetainedLicense' => 'releasedDetainedCards',
-            'createdTests' => 'createdTests',
-            'createdTestAppointments' => 'createdTestAppointments',
-            'createdApplications' => 'createdApplications',
-        ];
 
-        try{
-            $this->isAble("view", User::class);
+        if($this->isAble("viewAny", Auth::user()))
+        {
+            $toBeIncluded = [
+                'userInfo' => 'person',
+                'createdDrivers' => 'drivers',
+                'detainedLicenses' => 'createdDetainedLicenses',
+                'createdLicenses' => 'createdLicenses',
+                'releasedDetainedLicense' => 'releasedDetainedCards',
+                'createdTests' => 'createdTests',
+                'createdTestAppointments' => 'createdTestAppointments',
+                'createdApplications' => 'createdApplications',
+            ];
 
             foreach ($toBeIncluded as $key => $value)
             {
@@ -74,33 +59,33 @@ class UsersController extends ApiController
 
             return new UserResource($user);
         }
-        catch(AuthenticationException $e)
+
+        return $this->notAuthorized("NOT Authorized");
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        // PATCH
+        if ($this->isAble('update', Auth::user()))
         {
-            return $this->error('Not Authorized', 401);
+            $user->update($request->mappedAttributes());
+
+            return new UserResource($user);
         }
+
+        return $this->notAuthorized("NOT Authorized");
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
-        //
+        if($this->isAble('delete', Auth::user()))
+        {
+            $user->delete();
+
+            return $this->ok('User successfully deleted');
+        }
+
+        return $this->notAuthorized("NOT Authorized");
     }
 }

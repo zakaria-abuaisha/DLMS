@@ -37,25 +37,43 @@ abstract class QueryFilter {
         return $this->builder;
     }
 
-    protected function sort($value) {
+    protected function sort($value)
+    {
         $sortAttributes = explode(',', $value);
+        $model = $this->builder->getModel();
+        $baseTable = $model->getTable();
+        $this->joined = $this->joined ?? [];
 
-        foreach($sortAttributes as $sortAttribute) {
+        foreach ($sortAttributes as $sortAttribute) {
             $direction = 'asc';
 
-            if (strpos($sortAttribute, '-') === 0) {
+            if (str_starts_with($sortAttribute, '-')) {
                 $direction = 'desc';
-                $sortAttribute = substr($sortAttribute, 1);
+                $sortAttribute = ltrim($sortAttribute, '-');
             }
 
-            if (!in_array($sortAttribute, $this->sortable) && !array_key_exists($sortAttribute, $this->sortable)) {
+            if (!array_key_exists($sortAttribute, $this->sortable)) {
                 continue;
             }
 
-            $columnName = $this->sortable[$sortAttribute] ?? $sortAttribute;
+            $mapping = $this->sortable[$sortAttribute];
 
+            if ($mapping === 'self') {
+                // Sort using the base table
+                $this->builder->orderBy("$baseTable.$sortAttribute", $direction);
+            } else {
+                // Format: 'joinedTable:foreignKey,ownerKey'
+                [$relatedTable, $keys] = explode(':', $mapping);
+                [$foreignKey, $ownerKey] = explode(',', $keys);
 
-            $this->builder->orderBy($columnName, $direction);
+                // Perform join if not already done
+                if (!in_array($relatedTable, $this->joined)) {
+                    $this->builder->join($relatedTable, "$baseTable.$foreignKey", '=', "$relatedTable.$ownerKey");
+                    $this->joined[] = $relatedTable;
+                }
+
+                $this->builder->orderBy("$relatedTable.$sortAttribute", $direction);
+            }
         }
     }
 }
