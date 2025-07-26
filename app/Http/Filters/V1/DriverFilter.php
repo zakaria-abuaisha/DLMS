@@ -49,8 +49,4 @@ class DriverFilter extends QueryFilter
             ->whereDate('dateOfBirth', $value);
     }
 
-    public function include($value) {
-
-        return $this->builder->with(explode(',', $value));
-    }
 }

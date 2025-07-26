@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\V1\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +20,7 @@ class ApplicationType extends Model
     protected $fillable = [
         'title',
         'applicationFees',
+        'description'
     ];
 
     /**
@@ -29,6 +32,8 @@ class ApplicationType extends Model
     {
         return [
             'id' => 'integer',
+            'title' => 'string',
+            'description' => 'string',
             'applicationFees' => 'decimal:2',
         ];
     }
@@ -36,5 +41,10 @@ class ApplicationType extends Model
     public function applications(): hasMany
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    {
+        return $filters->apply($builder);
     }
 }

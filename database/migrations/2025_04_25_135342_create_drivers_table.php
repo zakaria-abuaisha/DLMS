@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('person_id')
-            ->references('id')
-            ->on('people')
-            ->onDelete('cascade');
+                ->unique()
+                ->references('id')
+                ->on('people')
+                ->onDelete('cascade');
 
             $table->foreignId('created_by_user_id')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

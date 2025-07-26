@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1\Drivers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreDriverRequest extends FormRequest
 {
@@ -41,9 +42,15 @@ class StoreDriverRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
         return [
-            'data.relationships.person.data.id' => ["required", 'integer', 'exists:people,id'],
-            'data.relationships.user.data.id' => ["required", 'integer', 'exists:users,id'],
-        ];
+            'data.relationships.person.data.id' => ["required", 'integer', 'unique:drivers,person_id', 'exists:people,id'],
+            'data.relationships.user.data.id' => [
+                "required",
+                'integer',
+                'exists:users,id',
+                Rule::exists('users', 'id')->where('isActive', 1),],
+            ];
     }
 }

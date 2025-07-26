@@ -19,6 +19,10 @@ class ApplicationTypeResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'title' => $this->title,
+                'description' => $this->when(
+                    !$request->routeIs(['applicationTypes.index']),
+                    $this->description
+                ),
                 'applicationFees' => $this->applicationFees,
             ],
             'included' => [

@@ -60,7 +60,4 @@ class UserFilter extends QueryFilter
         return $this->builder->whereIn('is_active', $value);
     }
 
-    public function include($value) {
-        return $this->builder->with($value);
-    }
 }

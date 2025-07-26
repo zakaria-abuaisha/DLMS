@@ -76,4 +76,9 @@ abstract class QueryFilter {
             }
         }
     }
+
+    public function include($value) {
+
+        return $this->builder->with(explode(',', $value));
+    }
 }

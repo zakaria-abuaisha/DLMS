@@ -25,6 +25,11 @@ class AuthController extends Controller
 
         $user = User::firstWhere('userName', $request->userName);
 
+        if(!$user->isActive)
+        {
+            return $this->error('This User Is Not Active.', 401);
+        }
+
         return $this->ok(
             'Authenticated',
             [

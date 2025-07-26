@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\V1\ApplicationTypeController;
 use App\Http\Controllers\Api\V1\DriversController;
 use App\Http\Controllers\Api\V1\PeopleController;
 use App\Http\Controllers\Api\V1\UploadPersonImageController;
@@ -17,6 +18,7 @@ Route::middleware('auth:sanctum')->group( function() {
 
     // Version 1
     Route::prefix('v1')->group( function() {
+
         // Users.
        Route::prefix('users')->group( function() {
            Route::post('/register', [UsersController::class, 'store']);
@@ -42,6 +44,15 @@ Route::middleware('auth:sanctum')->group( function() {
             Route::get('', [DriversController::class, 'index']);
             Route::get('/{driver}', [DriversController::class, 'show']);
             Route::delete('/{driver}', [DriversController::class, 'destroy']);
+        });
+
+        //Application Types
+        Route::prefix('applicationTypes')->group( function() {
+            Route::get('', [ApplicationTypeController::class, 'index']);
+            Route::get('/{applicationType}', [ApplicationTypeController::class, 'show']);
+            Route::post('/register', [ApplicationTypeController::class, 'store']);
+            Route::patch('/{applicationType}', [ApplicationTypeController::class, 'update']);
+            Route::delete('/{applicationType}', [ApplicationTypeController::class, 'destroy']);
         });
     });
 });

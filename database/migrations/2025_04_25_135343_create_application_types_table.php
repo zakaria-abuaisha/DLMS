@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('application_types', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->text('description')->nullable();
             $table->decimal('applicationFees', 10, 2);
             $table->timestamps();
         });
