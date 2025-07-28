@@ -21,7 +21,7 @@ class PersonFactory extends Factory
     public function definition(): array
     {
         return [
-            'nationalityNo' => fake()->word(),
+            'nationalityNo' => fake()->uuid(),
             'firstName' => fake()->word(),
             'lastName' => fake()->word(),
             'dateOfBirth' => fake()->date(),
@@ -29,7 +29,7 @@ class PersonFactory extends Factory
             'address' => fake()->word(),
             'phone' => fake()->phoneNumber(),
             'email' => fake()->safeEmail(),
-            'imagePath' => fake()->word(),
+            'imagePath' => null,
         ];
     }
 }

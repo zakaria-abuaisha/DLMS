@@ -24,6 +24,17 @@ class PeopleController extends ApiController
 
     public function show(Person $person)
     {
+        $toBeIncluded = [
+            'user' => 'users',
+            'driver' => 'drivers',
+            'createdApplications' => 'applications',
+        ];
+
+        foreach ($toBeIncluded as $key => $value)
+        {
+            if($this->include($key))
+                $person->load($value);
+        }
         return new PersonResource($person);
     }
 

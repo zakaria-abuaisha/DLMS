@@ -20,12 +20,11 @@ class ApplicationResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'applicant_person_id' => $this->applicant_person_id,
-                'applicationDate' => $this->applicationDate,
                 'application_type_id' => $this->application_type_id,
                 'applicationStatus' => $this->applicationStatus,
-                'lastStatusDate' => $this->lastStatusDate,
-                'paidFees' => $this->paidFees,
                 'created_by_user_id' => $this->created_by_user_id,
+                'paidFees' => $this->paidFees,
+                'created_at' => $this->created_at,
             ],
             'included' => [
                 'applicantInfo' => new PersonResource($this->whenLoaded('applicantPerson')),

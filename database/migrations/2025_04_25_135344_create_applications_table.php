@@ -17,12 +17,10 @@ return new class extends Migration
             ->references('id')
             ->on('people')
             ->onDelete('cascade');
-            $table->dateTime('applicationDate');
             $table->foreignId('application_type_id')
             ->references('id')
             ->on('application_types');
-            $table->enum('applicationStatus', ["P","C","F"])->default('P'); # Pending, Canceled, Finished
-            $table->dateTime('lastStatusDate');
+            $table->enum('applicationStatus', ["P","X","C"])->default('P'); # Pending(P), Canceled(X), Completed(C)
             $table->decimal('paidFees', 10, 2);
             $table->foreignId('created_by_user_id')
             ->references('id')

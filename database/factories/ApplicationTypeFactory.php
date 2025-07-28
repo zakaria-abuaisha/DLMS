@@ -21,8 +21,9 @@ class ApplicationTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'applicantTypeTitle' => fake()->word(),
-            'applicationFees' => fake()->randomFloat(2, 0, 99999999.99),
+            'title' => fake()->word(),
+            'description' => fake()->sentence(),
+            'applicationFees' => fake()->randomNumber(2, false),
         ];
     }
 }

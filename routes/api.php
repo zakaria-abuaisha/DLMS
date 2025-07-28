@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Http\Controllers\Api\V1\ApplicationTypeController;
 use App\Http\Controllers\Api\V1\DriversController;
 use App\Http\Controllers\Api\V1\PeopleController;
@@ -54,5 +55,16 @@ Route::middleware('auth:sanctum')->group( function() {
             Route::patch('/{applicationType}', [ApplicationTypeController::class, 'update']);
             Route::delete('/{applicationType}', [ApplicationTypeController::class, 'destroy']);
         });
+
+        // Applications
+        Route::prefix('applications')->group( callback: function() {
+            Route::get('', [ApplicationController::class, 'index']);
+            Route::get('/{application}', [ApplicationController::class, 'show']);
+            Route::post('/register', [ApplicationController::class, 'store']);
+            Route::patch('/{application}', [ApplicationController::class, 'update']);
+            Route::delete('/{application}', [ApplicationController::class, 'destroy']);
+        });
+
+        
     });
 });
