@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Person;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -31,6 +32,7 @@ class LicenseResource extends JsonResource
             'included' => [
                 'application' => new ApplicationResource($this->whenLoaded('application')),
                 'driver' => new DriverResource($this->whenLoaded('driver')),
+                'person' => new PersonResource($this->whenLoaded('person')),
                 'licenseClass' => new LicenseClassResource($this->whenLoaded('licenseClass')),
                 'createdByUser' => new UserResource($this->whenLoaded('createdByUser')),
             ],

@@ -24,16 +24,18 @@ class LicenseFactory extends Factory
      */
     public function definition(): array
     {
+        $lc = LicenseClass::inRandomOrder()->first();
+        $dt = fake()->dateTime();
         return [
             'application_id' => Application::factory(),
-            'driver_id' => Driver::factory(),
-            'license_class_id' => LicenseClass::factory(),
-            'issueDate' => fake()->dateTime(),
-            'expirationDate' => fake()->dateTime(),
+            'driver_id' => Driver::inRandomOrder()->first()->id,
+            'license_class_id' => $lc->id,
+            'issueDate' => $dt,
+            'expirationDate' => $dt->addYear($lc->defaultValidityLength),
             'notes' => fake()->text(),
-            'paidFees' => fake()->randomFloat(2, 0, 99999999.99),
+            'paidFees' => $lc->classFees,
             'isActive' => fake()->boolean(),
-            'created_by_user_id' => User::factory(),
+            'created_by_user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }

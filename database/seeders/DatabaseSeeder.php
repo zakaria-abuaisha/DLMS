@@ -2,20 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\Application;
 use App\Models\ApplicationType;
 use App\Models\Driver;
+use App\Models\LicenseClass;
+use App\Models\Person;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function appTypes()
     {
-        Driver::factory()->count(5)->create();
         ApplicationType::factory()->create(
             [
                 'title' => 'First Time License',
@@ -38,9 +37,9 @@ class DatabaseSeeder extends Seeder
         );
         ApplicationType::factory()->create(
             [
-                    'title' => 'Missing A License',
-                    'description' => 'Issue a license after missing the previous one.',
-                    'applicationFees' => 5.00
+                'title' => 'Missing A License',
+                'description' => 'Issue a license after missing the previous one.',
+                'applicationFees' => 5.00
             ]
         );
         ApplicationType::factory()->create(
@@ -57,5 +56,85 @@ class DatabaseSeeder extends Seeder
                 'applicationFees' => 5.00
             ]
         );
+    }
+
+    public function licenseClasses()
+    {
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Small motorcycle license',
+                'classDescription' => 'It allows the driver to drive small motorcycles.',
+                'minimumAllowedAge' => 18,
+                'defaultValidityLength' => 5,
+                'classFees' => 15.00
+            ]
+        );
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Heavy motorcycle license',
+                'classDescription' => 'It allows the driver to drive large and powerful motorcycles.',
+                'minimumAllowedAge' => 21,
+                'defaultValidityLength' => 5,
+                'classFees' => 30.00
+            ]
+        );
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Regular driving license',
+                'classDescription' => 'It allows the driver to drive light vehicles and personal cars',
+                'minimumAllowedAge' => 18,
+                'defaultValidityLength' => 10,
+                'classFees' => 20.00
+            ]
+        );
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Commercial driving license',
+                'classDescription' => 'It allows the driver to drive taxis or limousine cars.',
+                'minimumAllowedAge' => 21,
+                'defaultValidityLength' => 10,
+                'classFees' => 200.00
+            ]
+        );
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Agricultural vehicle driving license',
+                'classDescription' => 'It allows the driver to drive all agricultural vehicles.',
+                'minimumAllowedAge' => 21,
+                'defaultValidityLength' => 10,
+                'classFees' => 50.00
+            ]
+        );
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Small and medium bus license',
+                'classDescription' => 'It allows the driver to drive small and medium buses.',
+                'minimumAllowedAge' => 21,
+                'defaultValidityLength' => 10,
+                'classFees' => 250.00
+            ]
+        );
+        LicenseClass::factory()->create(
+            [
+                'className' => 'Trucks and heavy vehicles license',
+                'classDescription' => 'It allows the driver to drive trucks and heavy vehicles such as buses and large trucks.',
+                'minimumAllowedAge' => 21,
+                'defaultValidityLength' => 10,
+                'classFees' => 300.00
+            ]
+        );
+    }
+
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+//        Person::factory()->count(20)->create();
+//        User::factory()->count(5)->create();
+//        Driver::factory()->count(10)->create();
+//        $this->appTypes();
+//        Application::factory()->count(10)->create();
+        $this->licenseClasses();
     }
 }

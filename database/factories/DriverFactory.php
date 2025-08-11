@@ -23,8 +23,8 @@ class DriverFactory extends Factory
     public function definition(): array
     {
         return [
-            'person_id' => Person::factory(),
-            'created_by_user_id' => User::factory(),
+            'person_id' => Person::inRandomOrder()->first()->id,
+            'created_by_user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }

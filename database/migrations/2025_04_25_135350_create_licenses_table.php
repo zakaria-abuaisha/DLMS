@@ -19,14 +19,21 @@ return new class extends Migration
                 ->references('id')->on('drivers');
             $table->foreignId('license_class_id')
                 ->references('id')->on('license_classes');
-            $table->timestamp('issueDate')->useCurrent();
-            $table->dateTime('expirationDate');
+            $table->date('issueDate')->useCurrent();
+            $table->date('expirationDate');
             $table->text('notes');
+            /*
+                F -> First Time
+                RT -> Retained After Detain it
+                RN -> Renewed
+                M -> New After Missing It
+                D -> New After Damage It
+            */
+            $table->enum('issueReason', ['F', 'D', 'RT', 'RN', 'M']);
             $table->decimal('paidFees', 10, 2);
             $table->boolean('isActive')->default(true);
             $table->foreignId('created_by_user_id')
                 ->references('id')->on('users');
-            $table->timestamps();
         });
     }
 

@@ -23,14 +23,13 @@ class ApplicationFactory extends Factory
      */
     public function definition(): array
     {
+        $appType = ApplicationType::inRandomOrder()->first();
         return [
-            'applicant_person_id' => Person::factory(),
-            'applicationDate' => fake()->dateTime(),
-            'application_type_id' => ApplicationType::factory(),
-            'applicationStatus' => fake()->randomElement(["P","C","F"]),
-            'lastStatusDate' => fake()->dateTime(),
-            'paidFees' => fake()->randomFloat(2, 0, 99999999.99),
-            'created_by_user_id' => User::factory(),
+            'applicant_person_id' => Person::inRandomOrder()->first()->id,
+            'application_type_id' => $appType->id,
+            'applicationStatus' => fake()->randomElement(["P","C","X"]),
+            'paidFees' => $appType->applicationFees,
+            'created_by_user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }

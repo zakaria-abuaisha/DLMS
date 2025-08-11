@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\V1\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,6 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class License extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
+    protected $attributes = [
+        'isActive'=> true
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +30,7 @@ class License extends Model
         'issueDate',
         'expirationDate',
         'notes',
+        'issueReason',
         'paidFees',
         'isActive',
         'created_by_user_id',
@@ -39,7 +48,7 @@ class License extends Model
             'application_id' => 'integer',
             'driver_id' => 'integer',
             'license_class_id' => 'integer',
-            'issueDate' => 'timestamp',
+            'issueDate' => 'datetime',
             'expirationDate' => 'datetime',
             'paidFees' => 'decimal:2',
             'isActive' => 'boolean',
@@ -57,6 +66,18 @@ class License extends Model
         return $this->belongsTo(Driver::class);
     }
 
+    public function person()
+    {
+        return $this->hasOneThrough(
+            Person::class,
+            Driver::class,
+            'id',
+            'id',
+            'driver_id',
+            'person_id'
+        );
+    }
+
     public function licenseClass(): BelongsTo
     {
         return $this->belongsTo(LicenseClass::class);
@@ -65,5 +86,10 @@ class License extends Model
     public function createdByUser(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter): Builder
+    {
+        return $filter->apply($builder);
     }
 }

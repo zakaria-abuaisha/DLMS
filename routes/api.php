@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Http\Controllers\Api\V1\ApplicationTypeController;
 use App\Http\Controllers\Api\V1\DriversController;
+use App\Http\Controllers\Api\V1\LicensesController;
 use App\Http\Controllers\Api\V1\PeopleController;
 use App\Http\Controllers\Api\V1\UploadPersonImageController;
 use App\Http\Controllers\Api\V1\UsersController;
@@ -65,6 +66,14 @@ Route::middleware('auth:sanctum')->group( function() {
             Route::delete('/{application}', [ApplicationController::class, 'destroy']);
         });
 
-        
+        Route::prefix('licenses')->group( callback: function() {
+            Route::get('', [LicensesController::class, 'index']);
+            Route::get('/{license}', [LicensesController::class, 'show']);
+            Route::post('/register', [LicensesController::class, 'store']);
+            Route::patch('/{license}', [LicensesController::class, 'update']);
+            Route::patch('/toggleActivation/{license}', [LicensesController::class, 'toggleActivation']);
+            Route::delete('/{license}', [LicensesController::class, 'destroy']);
+        });
+
     });
 });
