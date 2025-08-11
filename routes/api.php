@@ -4,11 +4,11 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Http\Controllers\Api\V1\ApplicationTypeController;
 use App\Http\Controllers\Api\V1\DriversController;
+use App\Http\Controllers\Api\V1\LicenseClassesController;
 use App\Http\Controllers\Api\V1\LicensesController;
 use App\Http\Controllers\Api\V1\PeopleController;
 use App\Http\Controllers\Api\V1\UploadPersonImageController;
 use App\Http\Controllers\Api\V1\UsersController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //login
@@ -66,6 +66,7 @@ Route::middleware('auth:sanctum')->group( function() {
             Route::delete('/{application}', [ApplicationController::class, 'destroy']);
         });
 
+        // Licenses
         Route::prefix('licenses')->group( callback: function() {
             Route::get('', [LicensesController::class, 'index']);
             Route::get('/{license}', [LicensesController::class, 'show']);
@@ -73,6 +74,15 @@ Route::middleware('auth:sanctum')->group( function() {
             Route::patch('/{license}', [LicensesController::class, 'update']);
             Route::patch('/toggleActivation/{license}', [LicensesController::class, 'toggleActivation']);
             Route::delete('/{license}', [LicensesController::class, 'destroy']);
+        });
+
+        // License Classes
+        Route::prefix('license-classes')->group( callback: function() {
+            Route::get('', [LicenseClassesController::class, 'index']);
+            Route::get('/{licenseClass}', [LicenseClassesController::class, 'show']);
+            Route::post('/register', [LicenseClassesController::class, 'store']);
+            Route::patch('/{licenseClass}', [LicenseClassesController::class, 'update']);
+            Route::delete('/{licenseClass}', [LicenseClassesController::class, 'destroy']);
         });
 
     });
