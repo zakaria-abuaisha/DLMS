@@ -23,7 +23,7 @@ class TestTypeFactory extends Factory
         return [
             'testTypeTitle' => fake()->word(),
             'testTypeDescription' => fake()->text(),
-            'textTypeFees' => fake()->randomFloat(2, 0, 99999999.99),
+            'testTypeFees' => fake()->randomFloat(2, 0, 99999999.99),
         ];
     }
 }

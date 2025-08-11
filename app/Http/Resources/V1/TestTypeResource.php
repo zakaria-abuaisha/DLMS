@@ -20,7 +20,7 @@ class TestTypeResource extends JsonResource
             'attributes' => [
                 'testTypeTitle' => $this->testTypeTitle,
                 'testTypeDescription' => $this->testTypeDescription,
-                'textTypeFees' => $this->textTypeFees,
+                'testTypeFees' => $this->testTypeFees,
             ],
             'included' => [
                 'testAppointments' => TestAppointmentResource::collection($this->whenLoaded('testAppointments'))

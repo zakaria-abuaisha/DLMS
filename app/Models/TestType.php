@@ -18,7 +18,7 @@ class TestType extends Model
     protected $fillable = [
         'testTypeTitle',
         'testTypeDescription',
-        'textTypeFees',
+        'testTypeFees',
     ];
 
     /**
@@ -30,7 +30,7 @@ class TestType extends Model
     {
         return [
             'id' => 'integer',
-            'textTypeFees' => 'decimal:2',
+            'testTypeFees' => 'decimal:2',
         ];
     }
 

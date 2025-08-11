@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('testTypeTitle')->unique();
             $table->text('testTypeDescription');
-            $table->decimal('textTypeFees', 10, 2);
+            $table->decimal('testTypeFees', 10, 2);
             $table->timestamps();
         });
     }

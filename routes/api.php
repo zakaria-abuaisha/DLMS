@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\DriversController;
 use App\Http\Controllers\Api\V1\LicenseClassesController;
 use App\Http\Controllers\Api\V1\LicensesController;
 use App\Http\Controllers\Api\V1\PeopleController;
+use App\Http\Controllers\Api\V1\TestTypeController;
 use App\Http\Controllers\Api\V1\UploadPersonImageController;
 use App\Http\Controllers\Api\V1\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Version 1
-    Route::prefix('v1')->group( function() {
+    Route::prefix('v1')->group( callback: function() {
 
         // Users.
        Route::prefix('users')->group( function() {
@@ -77,12 +78,21 @@ Route::middleware('auth:sanctum')->group( function() {
         });
 
         // License Classes
-        Route::prefix('license-classes')->group( callback: function() {
+        Route::prefix('licenseClasses')->group( callback: function() {
             Route::get('', [LicenseClassesController::class, 'index']);
             Route::get('/{licenseClass}', [LicenseClassesController::class, 'show']);
             Route::post('/register', [LicenseClassesController::class, 'store']);
             Route::patch('/{licenseClass}', [LicenseClassesController::class, 'update']);
             Route::delete('/{licenseClass}', [LicenseClassesController::class, 'destroy']);
+        });
+
+        // Test Types
+        Route::prefix('testTypes')->group( callback: function() {
+            Route::get('', [TestTypeController::class, 'index']);
+            Route::get('/{testType}', [TestTypeController::class, 'show']);
+            Route::post('/register', [TestTypeController::class, 'store']);
+            Route::patch('/{testType}', [TestTypeController::class, 'update']);
+            Route::delete('/{testType}', [TestTypeController::class, 'destroy']);
         });
 
     });

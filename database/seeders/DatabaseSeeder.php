@@ -7,6 +7,7 @@ use App\Models\ApplicationType;
 use App\Models\Driver;
 use App\Models\LicenseClass;
 use App\Models\Person;
+use App\Models\TestType;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -125,6 +126,34 @@ class DatabaseSeeder extends Seeder
         );
     }
 
+    public function testTypes()
+    {
+        TestType::factory()->create(
+          [
+              'testTypeTitle' => 'Vision Test',
+              'testTypeDescription' => 'Medical tests to verify the health
+                    of the applicant for driving and its visual walls and record
+                    the result in the system, and information about the date of the
+                    examination and the result must be kept if it is successful or failed.',
+              'testTypeFees' => 10.00
+          ]
+        );
+        TestType::factory()->create(
+            [
+                'testTypeTitle' => 'Theoretical test',
+                'testTypeDescription' => 'It requires the applicant to answer questions related to traffic laws and safety',
+                'testTypeFees' => 20.00
+            ]
+        );
+        TestType::factory()->create(
+            [
+                'testTypeTitle' => 'Practical driving test',
+                'testTypeDescription' => 'The applicant must pass a practical testing of the driving that evaluates his capabilities to control the vehicle and comply with the traffic rules',
+                'testTypeFees' => 30.00
+            ]
+        );
+    }
+
     /**
      * Seed the application's database.
      */
@@ -135,6 +164,7 @@ class DatabaseSeeder extends Seeder
 //        Driver::factory()->count(10)->create();
 //        $this->appTypes();
 //        Application::factory()->count(10)->create();
-        $this->licenseClasses();
+//        $this->licenseClasses();
+//        $this->testTypes();
     }
 }
